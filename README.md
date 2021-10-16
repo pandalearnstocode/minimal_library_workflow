@@ -1,1 +1,1 @@
-# minimal_library_workflow
+# Minimal python package to test CI pipelines using GitHub action
