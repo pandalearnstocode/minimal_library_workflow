@@ -47,5 +47,5 @@ jobs:
       - name: Run static code analysis using mypy
         run: |
           pip install -r requirements.txt
-          pip install mypy typer typer-cli
+          pip install mypy typer typer-cli loguru
           mypy minipackage/
