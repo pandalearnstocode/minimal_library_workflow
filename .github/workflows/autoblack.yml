@@ -61,3 +61,5 @@ jobs:
         with:
           name: Security report
           path: output/security_report.txt
+      - name: Run static type analysis using mypy
+        uses: jpetrucciani/mypy-check@master
