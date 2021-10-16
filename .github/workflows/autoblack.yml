@@ -4,6 +4,10 @@
 # https://github.com/cclauss/autoblack
 # Ref: https://github.com/psf/black/actions/runs/17913292/workflow
 # https://www.henryschmale.org/2021/01/21/pylint-github-actions.html
+# https://github.com/marketplace/actions/lintly-flake8
+# https://github.com/marketplace/actions/flake8-with-annotations
+# https://medium.com/swlh/enhancing-code-quality-with-github-actions-67561c6f7063
+# http://www.grantmcconnaughey.com/blog/2020/02/25/automate-python-code-quality/
 
 name: autoblack
 on:
@@ -13,22 +17,25 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Set up Python 3.8
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2
         with:
           python-version: 3.8
       - name: Install Black
         run: |
           pip install --upgrade pip
-          pip install black pylint
+          pip install black pylint autoflake
       - name: Run black --check .
         run: black --check .
       - name: If needed, commit black changes to the pull request
         if: failure()
         run: |
           black .
+          autoflake --in-place -r --ignore-init-module-imports --remove-unused-variables --remove-all-unused-imports minipackage/
           git config --global user.name 'autoblack'
           git config --global user.email 'cclauss@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
@@ -37,3 +44,20 @@ jobs:
           git push
       - name: Run Pylint
         run: find . -name '*.py' -exec pylint {} \;
+      - uses: grantmcconnaughey/lintly-flake8-github-action@v1.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          failIf: new
+          args: "--ignore=E121,E123 ."
+      - name: Security check - Bandit
+        uses: ./
+        with:
+          python_version: ${{ matrix.python-version }}
+          project_path: .
+          ignore_failure: true
+      - name: Security check report artifacts
+        uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: Security report
+          path: output/security_report.txt
