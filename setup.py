@@ -9,6 +9,7 @@ with open("README.md") as readme_file:
 
 with open("requirements.txt") as f:
     requirements = f.read().splitlines()
+
 setup(
     author="Aritra Biswas",
     author_email="pandalearnstocode@gmail.com",
