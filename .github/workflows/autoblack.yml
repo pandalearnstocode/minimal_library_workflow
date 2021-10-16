@@ -29,6 +29,7 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install black pylint autoflake
+          pip install -r requirements.txt
       - name: Run black --check .
         run: black --check .
       - name: If needed, commit black changes to the pull request
@@ -43,24 +44,8 @@ jobs:
           git checkout $GITHUB_HEAD_REF
           git commit -am "fixup: Format Python code with Black"
           git push
-      - name: Run Pylint
-        run: find . -name '*.py' -exec pylint {} \;
-      - uses: grantmcconnaughey/lintly-flake8-github-action@v1.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          failIf: new
-          args: "--ignore=E121,E123 ."
-      - name: Security check - Bandit
-        uses: ./
-        with:
-          python_version: ${{ matrix.python-version }}
-          project_path: .
-          ignore_failure: true
-      - name: Security check report artifacts
-        uses: actions/upload-artifact@v1
-        if: failure()
-        with:
-          name: Security report
-          path: output/security_report.txt
-      - name: Run static type analysis using mypy
-        uses: jpetrucciani/mypy-check@master
+      - name: Run static code analysis using mypy
+        run: |
+          pip install -r requirements.txt
+          pip install mypy
+          mypy minipackage/
