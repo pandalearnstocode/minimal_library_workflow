@@ -1,4 +1,4 @@
-from source.main import hello_world
+from minipackage.main import hello_world
 
 
 def test_say_hello():

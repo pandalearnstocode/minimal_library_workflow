@@ -1,11 +1,10 @@
 
 from setuptools import find_packages, setup
 
-from source import __version__
+from minipackage import __version__
 
 with open("README.md") as readme_file:
     readme = readme_file.read()
-
 
 with open("requirements.txt") as f:
     requirements = f.read().splitlines()
@@ -24,17 +23,16 @@ setup(
     description="Python Library template for Data Science project.",
     entry_points={
         "console_scripts": [
-            "source=source.cli:main",
+            "source=minipackage.cli:main",
         ],
     },
     install_requires=requirements,
     include_package_data=True,
-    keywords="source",
+    keywords="minipackage",
     name="minipackage",
-    packages=find_packages(include=["source", "source.*"]),
+    packages=find_packages(include=["minipackage", "minipackage.*"]),
     test_suite="tests",
     tests_require=requirements,
-    url="https://github.com/pandalearnstocode/python-library-template",
     version=__version__,
     zip_safe=False,
 )
