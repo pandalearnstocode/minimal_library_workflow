@@ -21,3 +21,7 @@ update_changelog_on_bump = false
 tag_format = "v$version"
 bump_message = "bump: $current_version → $new_version [skip-ci]"
 annotated_tag = true
+
+[[tool.mypy.overrides]]
+module = "*.migrations.*"
+ignore_errors = true
