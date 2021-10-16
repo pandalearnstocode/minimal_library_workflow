@@ -57,6 +57,6 @@ jobs:
       - name: Security check - Bandit
         uses: ./
         with:
-          python_version: ${{ matrix.python-version }}
-          project_path: .
+          python_version: 3.8
+          project_path: minipackage
           ignore_failure: true
