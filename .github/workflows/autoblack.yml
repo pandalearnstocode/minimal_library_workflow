@@ -44,5 +44,7 @@ jobs:
           git checkout $GITHUB_HEAD_REF
           git commit -am "fixup: Format Python code with Black"
           git push
-      - name: Run static type analysis using mypy
-        uses: jpetrucciani/mypy-check@master
+      - name: Run static code analysis using mypy
+        run: |
+          pip install mypy
+          mypy minipackage/
