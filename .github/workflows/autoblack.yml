@@ -46,5 +46,6 @@ jobs:
           git push
       - name: Run static code analysis using mypy
         run: |
+          pip install -r requirements.txt
           pip install mypy
           mypy minipackage/
