@@ -5,7 +5,10 @@
 # Ref: https://github.com/psf/black/actions/runs/17913292/workflow
 
 name: autoblack
-on: [pull_request]
+on:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
