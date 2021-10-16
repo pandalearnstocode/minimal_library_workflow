@@ -3,6 +3,7 @@
 # Othewrwise, Black is run and its changes are committed back to the incoming pull request.
 # https://github.com/cclauss/autoblack
 # Ref: https://github.com/psf/black/actions/runs/17913292/workflow
+# https://www.henryschmale.org/2021/01/21/pylint-github-actions.html
 
 name: autoblack
 on:
@@ -19,7 +20,9 @@ jobs:
         with:
           python-version: 3.8
       - name: Install Black
-        run: pip install black
+        run: |
+          pip install --upgrade pip
+          pip install black pylint
       - name: Run black --check .
         run: black --check .
       - name: If needed, commit black changes to the pull request
@@ -32,3 +35,5 @@ jobs:
           git checkout $GITHUB_HEAD_REF
           git commit -am "fixup: Format Python code with Black"
           git push
+      - name: Run Pylint
+        run: find . -name '*.py' -exec pylint {} \;
