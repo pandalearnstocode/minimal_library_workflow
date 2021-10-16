@@ -10,6 +10,7 @@ app = typer.Typer()
 def hello():
     hello_world()
 
+
 if __name__ == "__main__":
     logger.info("Starting CLI application")
     app()

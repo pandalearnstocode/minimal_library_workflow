@@ -1,4 +1,3 @@
-
 from setuptools import find_packages, setup
 
 from minipackage import __version__
