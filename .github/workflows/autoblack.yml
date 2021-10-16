@@ -21,6 +21,8 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
         with:
@@ -54,9 +56,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           failIf: new
           args: "--ignore=E121,E123,F401 ."
-      - name: Security check - Bandit
-        uses: ./
+      - name: Run Bandit Report
+        uses: libertyy/py3-bandit-check@v2
+      - name: Save Bandit txt Report
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
         with:
-          python_version: 3.8
-          project_path: minipackage
-          ignore_failure: true
+          path: ${{ RUNNER.temp }}/_github_home/bandit_report.out
+
