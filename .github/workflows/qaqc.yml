@@ -40,25 +40,16 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
-          level: info
-          fail_on_error: false
-          workdir: minipackage
       - name: Running static typing using mypy
         uses: tsuyoshicho/action-mypy@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
-          level: info
-          fail_on_error: false
-          workdir: minipackage
       - name: Running pylint check in existing code base
         uses: dciborow/action-pylint@0.0.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
-          level: info
-          fail_on_error: false
-          workdir: minipackage
       - name: Python security check using Bandit
         uses: Joel-hanson/bandit-report-artifacts@V1
         with:
