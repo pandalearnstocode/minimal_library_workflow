@@ -21,7 +21,7 @@ jobs:
           update-setuptools: "true"
           update-wheel: "true"
       - name: pylint Lint
-      - uses: dciborow/action-pylint@v1
+      - uses: dciborow/action-pylint@0.0.3
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
