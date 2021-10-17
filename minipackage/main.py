@@ -32,7 +32,7 @@ def ramdom_function():
     return random.randint(0, 100)
 
 
-def main                    ():
+def main():
     print(hello_world())
     print(hello_mcu())
     print(hello_dc())
