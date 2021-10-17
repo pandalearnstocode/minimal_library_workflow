@@ -47,5 +47,5 @@ def another_test():
     return "another test"
 
 
-def splitted      ():
+def splitted():
     return "splitted"
