@@ -53,3 +53,7 @@ def test_function():
 
 def another_sample_function():
     return "another sample function"
+
+
+def tets_5():
+    return "test 5"
