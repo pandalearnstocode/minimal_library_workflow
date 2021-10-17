@@ -5,8 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: ubuntu-latest
-        python-version: 3.8
+        os: ['ubuntu-latest']
+        python-version: ['3.8']
     name: Python ${{ matrix.python-version }} ${{ matrix.os }} 
     steps:
     - uses: actions/checkout@v2
