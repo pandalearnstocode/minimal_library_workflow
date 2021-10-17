@@ -1,6 +1,7 @@
 name: Black
 on:
   push:
+    branches: [develop]
 jobs:
   build:
     runs-on: ubuntu-latest
