@@ -1,0 +1,22 @@
+name: flake8 Lint
+on:
+  pull_request:
+  push:
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  flake8-lint:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: flake8 Lint
+        uses: reviewdog/action-flake8@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
