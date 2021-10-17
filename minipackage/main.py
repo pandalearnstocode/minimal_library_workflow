@@ -47,5 +47,5 @@ def another_test():
     return "another test"
 
 
-def est_function():
+def test_function():
     return "test function"
