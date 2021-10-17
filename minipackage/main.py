@@ -43,5 +43,5 @@ def adding_new_function():
     return "new function"
 
 
-def another_test            ():
+def another_test():
     return "another test"
