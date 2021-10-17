@@ -1,0 +1,76 @@
+name: Formatting, Style check & linting
+on:
+  pull_request:
+  push:
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  flake8-lint:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install Python dependencies
+        uses: py-actions/py-dependency-install@v2
+        with:
+          update-pip: "true"
+          update-setuptools: "true"
+          update-wheel: "true"
+      - name: Installing Black and autoflake
+        run: pip install black autoflake
+      - name: Check code base with black
+        run: black --check .
+      - name: If needed, commit black changes to the pull request
+        if: failure()
+        run: |
+          black .
+          autoflake --in-place -r --ignore-init-module-imports --remove-unused-variables --remove-all-unused-imports .
+          git config --global user.name 'autoformatting'
+          git config --global user.email 'pandalearnstocode@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git checkout $GITHUB_HEAD_REF
+          git commit -am "fixup: Format Python code with Black"
+          git push origin $GITHUB_HEAD_REF
+      - name: Python security check using Bandit
+        uses: Joel-hanson/bandit-report-artifacts@V1
+        with:
+          python_version: '3.8'
+          project_path: .
+          ignore_failure: true
+      - name: Security check report artifacts
+        uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: Security report
+          path: output/security_report.txt
+      - name: Running flake8 check in existing code base
+        uses: reviewdog/action-flake8@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          level: warning
+      - name: Running static typing using mypy
+        uses: tsuyoshicho/action-mypy@v3
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          level: warning
+          workdir: minipackage
+      - name: Running pylint check in existing code base
+        uses: dciborow/action-pylint@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          level: warning
+      - name: Running pyright check in existing code base
+        uses: jordemort/action-pyright@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          lib: true
