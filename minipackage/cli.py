@@ -10,6 +10,7 @@ app = typer.Typer()
 def hw():
     hello_world()
 
+
 @app.command("mcu")
 def hm():
     hello_mcu()
