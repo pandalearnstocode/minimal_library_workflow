@@ -1,5 +1,4 @@
 """main is a public module."""
-import random
 
 
 def hello_world():
