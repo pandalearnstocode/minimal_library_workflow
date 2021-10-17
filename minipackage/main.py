@@ -45,3 +45,7 @@ def adding_new_function():
 
 def another_test():
     return "another test"
+
+
+def splitted():
+    return "splitted"
