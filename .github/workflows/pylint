@@ -1,0 +1,22 @@
+name: QC with pylint
+on:
+  pull_request:
+  push:
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - uses: actions/checkout@master
+      - name: GitHub Action for pylint
+        uses: cclauss/GitHub-Action-for-pylint@master
+        with:
+          args: pylint --help
