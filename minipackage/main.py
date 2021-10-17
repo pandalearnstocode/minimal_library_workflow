@@ -1,3 +1,6 @@
+import random
+
+
 def hello_world():
     """This is a hello world function.
 
@@ -23,3 +26,14 @@ def hello_dc():
         str: hello dc
     """
     return "Hello DC!"
+
+
+def ramdom_function():
+    return random.randint(0, 100)
+
+
+def main():
+    print(hello_world())
+    print(hello_mcu())
+    print(hello_dc())
+    print(ramdom_function())
