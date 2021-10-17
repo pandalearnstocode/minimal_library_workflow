@@ -20,21 +20,6 @@ jobs:
           update-pip: "true"
           update-setuptools: "true"
           update-wheel: "true"
-      - name: Installing Black and autoflake
-        run: pip install black autoflake
-      - name: Check code base with black
-        run: black --check .
-      - name: If needed, commit black changes to the pull request
-        if: failure()
-        run: |
-          black .
-          autoflake --in-place -r --ignore-init-module-imports --remove-unused-variables --remove-all-unused-imports .
-          git config --global user.name 'autoformatting'
-          git config --global user.email 'pandalearnstocode@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
-          git checkout $GITHUB_HEAD_REF
-          git commit -am "fixup: Format Python code with Black"
-          git push origin $GITHUB_HEAD_REF
       - uses: reviewdog/action-flake8@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
