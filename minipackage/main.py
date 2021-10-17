@@ -47,5 +47,5 @@ def another_test():
     return "another test"
 
 
-def another_test2               ():
+def another_test2():
     return "another test2"
