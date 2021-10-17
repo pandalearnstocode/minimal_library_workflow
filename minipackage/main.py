@@ -41,3 +41,7 @@ def main():
 
 def adding_new_function():
     return "new function"
+
+
+def another_test():
+    return "another test"
