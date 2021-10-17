@@ -20,11 +20,7 @@ setup(
         "Programming Language :: Python :: 3.8",
     ],
     description="Python Library template for Data Science project.",
-    entry_points={
-        "console_scripts": [
-            "source=minipackage.cli:main",
-        ],
-    },
+    entry_points={"console_scripts": ["source=minipackage.cli:main",],},
     install_requires=requirements,
     include_package_data=True,
     keywords="minipackage",
