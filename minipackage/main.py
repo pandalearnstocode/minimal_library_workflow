@@ -57,3 +57,7 @@ def another_sample_function():
 
 def tets_5():
     return "test 5"
+
+
+def pr_test():
+    return "pr test"
