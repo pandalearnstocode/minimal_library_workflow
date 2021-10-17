@@ -30,3 +30,10 @@ def hello_dc():
 
 def ramdom_function():
     return random.randint(0, 100)
+
+
+def main                    ():
+    print(hello_world())
+    print(hello_mcu())
+    print(hello_dc())
+    print(ramdom_function())
