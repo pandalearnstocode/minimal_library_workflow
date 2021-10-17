@@ -63,7 +63,7 @@ jobs:
           level: warning
           workdir: minipackage
       - name: Running pylint check in existing code base
-        uses: dciborow/action-pylint@v1
+        uses: dciborow/action-pylint@0.0.3
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
