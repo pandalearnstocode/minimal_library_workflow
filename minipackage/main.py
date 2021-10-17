@@ -39,5 +39,5 @@ def main():
     print(ramdom_function())
 
 
-def adding_new_function                      ():
+def adding_new_function():
     return "new function"
