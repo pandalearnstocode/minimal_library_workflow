@@ -27,57 +27,57 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
-      - name: Install Black
-        run: |
-          pip install --upgrade pip
-          pip install black pylint autoflake
-          pip install -r requirements.txt
-      - name: Run black --check .
-        run: black --check .
-      - name: If needed, commit black changes to the pull request
-        if: failure()
-        run: |
-          black .
-          autoflake --in-place -r --ignore-init-module-imports --remove-unused-variables --remove-all-unused-imports minipackage/
-          git config --global user.name 'autoblack'
-          git config --global user.email 'cclauss@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
-          git fetch --all
-          git checkout $GITHUB_HEAD_REF
-          git commit -am "fixup: Format Python code with Black"
-          git push
-      - name: Run static code analysis using mypy
-        run: |
-          pip install -r requirements.txt
-          pip install mypy typer typer-cli loguru
-          mypy minipackage/
-      - uses: grantmcconnaughey/lintly-flake8-github-action@v1.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          failIf: new
-          args: "--ignore=E121,E123,F401 ."
-      - name: Run Bandit Report
-        uses: libertyy/py3-bandit-check@v2
-      - name: Save Bandit txt Report
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v2
-        with:
-          path: ${{ RUNNER.temp }}/_github_home/bandit_report.out
-      - uses: ricardochaves/python-lint@v1.4.0
-        with:
-          python-root-list: "minipackage tests"
-          use-pylint: true
-          use-pycodestyle: true
-          use-flake8: true
-          use-black: true
-          use-mypy: true
-          use-isort: true
-          extra-pylint-options: ""
-          extra-pycodestyle-options: ""
-          extra-flake8-options: ""
-          extra-black-options: ""
-          extra-mypy-options: ""
-          extra-isort-options: ""
+#       - name: Install Black
+#         run: |
+#           pip install --upgrade pip
+#           pip install black pylint autoflake
+#           pip install -r requirements.txt
+#       - name: Run black --check .
+#         run: black --check .
+#       - name: If needed, commit black changes to the pull request
+#         if: failure()
+#         run: |
+#           black .
+#           autoflake --in-place -r --ignore-init-module-imports --remove-unused-variables --remove-all-unused-imports minipackage/
+#           git config --global user.name 'autoblack'
+#           git config --global user.email 'cclauss@users.noreply.github.com'
+#           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+#           git fetch --all
+#           git checkout $GITHUB_HEAD_REF
+#           git commit -am "fixup: Format Python code with Black"
+#           git push
+#       - name: Run static code analysis using mypy
+#         run: |
+#           pip install -r requirements.txt
+#           pip install mypy typer typer-cli loguru
+#           mypy minipackage/
+#       - uses: grantmcconnaughey/lintly-flake8-github-action@v1.0
+#         with:
+#           token: ${{ secrets.GITHUB_TOKEN }}
+#           failIf: new
+#           args: "--ignore=E121,E123,F401 ."
+#       - name: Run Bandit Report
+#         uses: libertyy/py3-bandit-check@v2
+#       - name: Save Bandit txt Report
+#         if: ${{ always() }}
+#         uses: actions/upload-artifact@v2
+#         with:
+#           path: ${{ RUNNER.temp }}/_github_home/bandit_report.out
+#       - uses: ricardochaves/python-lint@v1.4.0
+#         with:
+#           python-root-list: "minipackage tests"
+#           use-pylint: true
+#           use-pycodestyle: true
+#           use-flake8: true
+#           use-black: true
+#           use-mypy: true
+#           use-isort: true
+#           extra-pylint-options: ""
+#           extra-pycodestyle-options: ""
+#           extra-flake8-options: ""
+#           extra-black-options: ""
+#           extra-mypy-options: ""
+#           extra-isort-options: ""
       - name: wemake-python-styleguide
         uses: wemake-services/wemake-python-styleguide@0.15.3
         with:
