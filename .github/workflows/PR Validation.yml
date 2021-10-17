@@ -49,7 +49,7 @@ jobs:
         if: always()
         run: |
           chmod +x ./run_lint.sh
-          ./run_lint.sh ./.ci/pydocstyle_wrapper.py > ../reports/pydocstyle.json || true
+          ./run_lint.sh ./pydocstyle_wrapper.py > ../reports/pydocstyle.json || true
           ./run_lint.sh pydocstyle
       - name: Lint (pylint)
         run: |
