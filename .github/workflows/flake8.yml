@@ -16,6 +16,12 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
+      - name: Install Python dependencies
+        uses: py-actions/py-dependency-install@v2
+        with:
+          update-pip: "true"
+          update-setuptools: "true"
+          update-wheel: "true"
       - name: flake8 Lint
         uses: reviewdog/action-flake8@v3
         with:
