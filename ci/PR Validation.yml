@@ -1,0 +1,90 @@
+name: PR Validation
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  Tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - uses: actions/checkout@v2
+      - name: prepare
+        run: |
+          pip install -r requirements.txt
+      - name: pytest
+        run: |
+          coverage run -m pytest -q tests
+          coverage xml
+      - name: Store coverage for sonar job
+        uses: actions/upload-artifact@v1
+        with:
+          name: coverage
+          path: coverage.xml
+  Linting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - uses: actions/checkout@v2
+      - name: prepare
+        run: | 
+          pip install -r requirements_lint.txt
+          git fetch --depth 1 origin develop
+          mkdir ../reports
+      - name: Lint (bandit)
+        run: |
+          .run_lint.sh bandit "--ini setup.cfg --output ../reports/bandit.json -f json" || true
+          .run_lint.sh bandit "--ini setup.cfg --silent"
+      - name: Lint (flake8)
+        if: always()
+        run: |
+          .run_lint.sh flake8 "--output-file=../reports/flake8.out" || true
+          .run_lint.sh flake8
+      - name: Lint (pydocstyle)
+        if: always()
+        run: |
+          .run_lint.sh ./.ci/pydocstyle_wrapper.py > ../reports/pydocstyle.json || true
+          .run_lint.sh pydocstyle
+      - name: Store reports for sonar job
+        uses: actions/upload-artifact@v1
+        if: always()
+        with:
+          name: linting-reports
+          path: ../reports/
+
+
+  # the scanner can run independently but if it has reports available on the specified paths of the sonar properties file
+  # it will use them. therefore we wait for the previous jobs to finish, but carry on even if they have failed.
+  Sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    if: always()
+    needs: [Linting,Tests]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Get coverage report
+        uses: actions/download-artifact@v1
+        with:
+          name: coverage
+        continue-on-error: true
+      - name: Get linting reports
+        uses: actions/download-artifact@v1
+        with:
+          name: linting-reports
+        continue-on-error: true
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.python.coverage.reportPaths=coverage/coverage.xml
+            -Dsonar.python.flake8.reportPaths=linting-reports/flake8.out
+            -Dsonar.python.bandit.reportPaths=linting-reports/bandit.json
+            -Dsonar.externalIssuesReportPaths=linting-reports/pydocstyle.json
