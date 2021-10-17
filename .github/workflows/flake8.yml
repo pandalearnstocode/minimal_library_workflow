@@ -5,7 +5,7 @@ on:
 jobs:
   flake8-lint:
     runs-on: ubuntu-latest
-    name: Lint
+    name: Flake8
     steps:
       - uses: actions/checkout@v2
         with:
