@@ -53,3 +53,7 @@ def test_function():
 
 def another_sample_function():
     return "another sample function"
+
+
+def test_3():
+    return "test 3"
