@@ -57,3 +57,7 @@ def another_sample_function():
 
 def tets_5():
     return "test 5"
+
+
+def test_7():
+    return "test 7"
