@@ -1,39 +1,27 @@
-# name: QC with pylint
-# on:
-#   pull_request:
-#   push:
-#   schedule:
-#     - cron: '0 0 * * *'
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
-#         with:
-#           fetch-depth: 0
-#       - name: Set up Python 3.8
-#         uses: actions/setup-python@v2
-#         with:
-#           python-version: 3.8
-#       - uses: actions/checkout@master
-#       - name: GitHub Action for pylint
-#         uses: cclauss/GitHub-Action-for-pylint@master
-#         with:
-#           args: pylint --help
-
-name: reviewdog
-on: [pull_request]
+name: pyliny Lint
+on:
+  pull_request:
+    types: [opened, synchronize]
 jobs:
-  pylint:
-    name: runner / pylint
+  pylint-lint:
     runs-on: ubuntu-latest
+    name: PyLint
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install Python dependencies
+        uses: py-actions/py-dependency-install@v2
+        with:
+          update-pip: "true"
+          update-setuptools: "true"
+          update-wheel: "true"
+      - name: pylint Lint
       - uses: dciborow/action-pylint@v1
         with:
           github_token: ${{ secrets.github_token }}
-          # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
           reporter: github-pr-review
-          # Change reporter level if you need.
-          # GitHub Status Check won't become failure with warning.
-          level: warning
