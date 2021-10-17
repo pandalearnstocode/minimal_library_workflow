@@ -39,24 +39,29 @@ jobs:
         uses: Joel-hanson/bandit-report-artifacts@V1
         with:
           python_version: '3.8'
-          project_path: .
+          project_path: minipackage
           ignore_failure: true
       - name: Running flake8 check in existing code base
         uses: reviewdog/action-flake8@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
-          level: warning
+          level: info
+          fail_on_error: false
+          workdir: minipackage
       - name: Running static typing using mypy
         uses: tsuyoshicho/action-mypy@v3
         with:
-          github_token: ${{ secrets.github_token }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
-          level: warning
+          level: info
+          fail_on_error: false
           workdir: minipackage
       - name: Running pylint check in existing code base
         uses: dciborow/action-pylint@0.0.3
         with:
-          github_token: ${{ secrets.github_token }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
-          level: warning
+          level: info
+          fail_on_error: false
+          workdir: minipackage
