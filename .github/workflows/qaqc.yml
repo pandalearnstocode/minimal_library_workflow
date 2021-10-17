@@ -1,6 +1,7 @@
 name: Formatting, Style check & linting
 on:
-  pull_request
+  pull_request:
+    types: [opened, synchronize]
 jobs:
   QA-QC:
     runs-on: ubuntu-latest
@@ -40,12 +41,6 @@ jobs:
           python_version: '3.8'
           project_path: .
           ignore_failure: true
-      - name: Security check report artifacts
-        uses: actions/upload-artifact@v1
-        if: failure()
-        with:
-          name: Security report
-          path: output/security_report.txt
       - name: Running flake8 check in existing code base
         uses: reviewdog/action-flake8@v3
         with:
