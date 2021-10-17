@@ -15,9 +15,11 @@ def hw():
 def hm():
     hello_mcu()
 
+
 @app.command("dc")
 def hd():
     hello_dc()
+
 
 if __name__ == "__main__":
     logger.info("Starting CLI application")

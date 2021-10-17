@@ -8,5 +8,6 @@ def test_hello_world_lib():
 def test_hello_mcu_lib():
     assert minipack.hello_mcu() == "Hello MCU!"
 
+
 def test_hello_dc_lib():
     assert minipack.hello_dc() == "Hello DC!"

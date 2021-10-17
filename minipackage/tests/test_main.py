@@ -8,5 +8,6 @@ def test_say_hello():
 def test_say_hello_mcu():
     assert hello_mcu() == "Hello MCU!"
 
+
 def test_say_hello_dc():
     assert hello_dc() == "Hello DC!"
