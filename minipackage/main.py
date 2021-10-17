@@ -49,3 +49,7 @@ def another_test():
 
 def test_function():
     return "test function"
+
+
+def another_sample_function():
+    return "another sample function"
