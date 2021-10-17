@@ -50,3 +50,4 @@ jobs:
             -Dsonar.python.coverage.reportPaths=coverage/coverage.xml
             -Dsonar.organization=pandalearnstocode
             -Dsonar.projectKey=pandalearnstocode_minimal_library_workflow
+            -Dsonar.python.version=3.8
