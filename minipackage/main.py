@@ -1,8 +1,8 @@
-import random
+"""main is a public module."""
 
 
 def hello_world():
-    """This is a hello world function.
+    """hello_world is a hello world function.
 
     Returns:
         str: Hello world
@@ -11,7 +11,7 @@ def hello_world():
 
 
 def hello_mcu():
-    """This is a hello mcu function.
+    """hello_mcu is a hello mcu function.
 
     Returns:
         str: hello mcu
@@ -20,40 +20,9 @@ def hello_mcu():
 
 
 def hello_dc():
-    """This is a hello dc function.
+    """hello_dc is a hello dc function.
 
     Returns:
         str: hello dc
     """
     return "Hello DC!"
-
-
-def ramdom_function():
-    return random.randint(0, 100)
-
-
-def main():
-    print(hello_world())
-    print(hello_mcu())
-    print(hello_dc())
-    print(ramdom_function())
-
-
-def adding_new_function():
-    return "new function"
-
-
-def another_test():
-    return "another test"
-
-
-def test_function():
-    return "test function"
-
-
-def another_sample_function():
-    return "another sample function"
-
-
-def tets_5():
-    return "test 5"
