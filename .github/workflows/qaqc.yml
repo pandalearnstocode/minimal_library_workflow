@@ -1,11 +1,8 @@
 name: Formatting, Style check & linting
 on:
-  pull_request:
-  push:
-  schedule:
-    - cron: '0 0 * * *'
+  pull_request
 jobs:
-  flake8-lint:
+  QA-QC:
     runs-on: ubuntu-latest
     name: Lint
     steps:
