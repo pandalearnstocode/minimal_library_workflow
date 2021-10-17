@@ -99,3 +99,4 @@ jobs:
             -Dsonar.python.bandit.reportPaths=linting-reports/bandit.json
             -Dsonar.externalIssuesReportPaths=linting-reports/pydocstyle.json
             -Dsonar.python.pylint.reportPath=linting-reports/pylint.log
+            -Dsonar.python.version=3.8
