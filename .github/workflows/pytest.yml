@@ -1,0 +1,24 @@
+name: Pytest
+on:
+  pull_request:
+    types: [opened, synchronize]
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    name: Pytest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install Python dependencies
+        uses: py-actions/py-dependency-install@v2
+        with:
+          update-pip: "true"
+          update-setuptools: "true"
+          update-wheel: "true"
+      - name: GitHub Action for pytest
+        uses: cclauss/GitHub-Action-for-pytest@0.5.0
