@@ -26,3 +26,12 @@ def hello_dc():
         str: hello dc
     """
     return "Hello DC!"
+
+
+def hello_mcu_dc():
+    """hello_dc is a hello dc function.
+
+    Returns:
+        str: hello dc
+    """
+    return "Hello MCU DC!"
