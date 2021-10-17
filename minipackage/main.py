@@ -37,3 +37,7 @@ def main():
     print(hello_mcu())
     print(hello_dc())
     print(ramdom_function())
+
+
+def adding_new_function                      ():
+    return "new function"
