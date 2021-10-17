@@ -45,3 +45,11 @@ def adding_new_function():
 
 def another_test():
     return "another test"
+
+
+def test_function():
+    return "test function"
+
+
+def another_sample_function():
+    return "another sample function"
