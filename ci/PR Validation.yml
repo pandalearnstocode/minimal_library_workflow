@@ -31,7 +31,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: prepare
         run: | 
-          pip install -r requirements_lint.txt
+          pip install -r requirements.txt
           git fetch --depth 1 origin develop
           mkdir ../reports
       - name: Lint (bandit)
@@ -48,6 +48,10 @@ jobs:
         run: |
           .run_lint.sh ./.ci/pydocstyle_wrapper.py > ../reports/pydocstyle.json || true
           .run_lint.sh pydocstyle
+      - name: Lint (pylint)
+        run: |
+          pip install pylint
+          pylint minipackage -r n --msg-template="{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}" --exit-zero > ../reports/pylint.log
       - name: Store reports for sonar job
         uses: actions/upload-artifact@v1
         if: always()
@@ -88,3 +92,4 @@ jobs:
             -Dsonar.python.flake8.reportPaths=linting-reports/flake8.out
             -Dsonar.python.bandit.reportPaths=linting-reports/bandit.json
             -Dsonar.externalIssuesReportPaths=linting-reports/pydocstyle.json
+            -Dsonar.python.pylint.reportPath=linting-reports/pylint.log
