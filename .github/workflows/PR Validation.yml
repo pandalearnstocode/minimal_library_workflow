@@ -36,18 +36,18 @@ jobs:
           mkdir ../reports
       - name: Lint (bandit)
         run: |
-          .run_lint.sh bandit "--ini setup.cfg --output ../reports/bandit.json -f json" || true
-          .run_lint.sh bandit "--ini setup.cfg --silent"
+          ./run_lint.sh bandit "--ini setup.cfg --output ../reports/bandit.json -f json" || true
+          ./run_lint.sh bandit "--ini setup.cfg --silent"
       - name: Lint (flake8)
         if: always()
         run: |
-          .run_lint.sh flake8 "--output-file=../reports/flake8.out" || true
-          .run_lint.sh flake8
+          ./run_lint.sh flake8 "--output-file=../reports/flake8.out" || true
+          ./run_lint.sh flake8
       - name: Lint (pydocstyle)
         if: always()
         run: |
-          .run_lint.sh ./.ci/pydocstyle_wrapper.py > ../reports/pydocstyle.json || true
-          .run_lint.sh pydocstyle
+          ./run_lint.sh ./.ci/pydocstyle_wrapper.py > ../reports/pydocstyle.json || true
+          ./run_lint.sh pydocstyle
       - name: Lint (pylint)
         run: |
           pip install pylint
